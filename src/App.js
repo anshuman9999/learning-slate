@@ -51,7 +51,7 @@ const App = () => {
           renderElement={renderElement}
           renderLeaf={ renderLeaf }
           onKeyDown={event => {
-            
+
             if (!event.ctrlKey) {
               return
             }
@@ -60,9 +60,15 @@ const App = () => {
 
               case '`':
                 event.preventDefault()
+
+                const [match] = Editor.nodes(
+                  editor,
+                  { match: n => n.type === "code" }
+                )
+
                 Transforms.setNodes(
                   editor,
-                  { type: 'code' },
+                  { type: match ? 'paragraph' : 'code' },
                   { match: n => Editor.isBlock(editor, n) }
                 )
                 break
