@@ -75,9 +75,13 @@ const App = () => {
 
               case 'b':
                 event.preventDefault()
+                const [boldMatch] = Editor.nodes(
+                  editor,
+                  { match: n => n.type === "bold" }
+                )
                 Transforms.setNodes(
                   editor,
-                  { type: 'bold' },
+                  { type: boldMatch ? 'paragraph' : 'bold' },
                   { match: n => Text.isText(n), split: true }
                 )
                 break
