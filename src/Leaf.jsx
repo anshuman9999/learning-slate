@@ -12,6 +12,12 @@ export const ItalicLeaf = (props) => {
     )
 }
 
+export const UnderlineLeaf = (props) => {
+    return (
+        <u { ...props.attributes } >{ props.children }</u>
+    )
+}
+
 export const DefaultLeaf = (props) => {
     return (
         <span {...props.attributes} >{props.children}</span>

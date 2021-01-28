@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, useState } from 'react'
 import { createEditor, Editor, Text, Transforms } from 'slate'
 import { Slate, Editable, withReact } from 'slate-react'
 import { CodeElement, DefaultElement } from './Elements'
-import { BoldLeaf, DefaultLeaf, ItalicLeaf } from './Leaf'
+import { BoldLeaf, DefaultLeaf, ItalicLeaf, UnderlineLeaf } from './Leaf'
 import './App.css'
 
 const App = () => {
@@ -31,6 +31,9 @@ const App = () => {
 
       case 'italic':
         return <ItalicLeaf { ...props } />
+
+      case 'underline':
+        return <UnderlineLeaf { ...props } />
 
       default: return <DefaultLeaf { ...props } />
     }
@@ -74,6 +77,10 @@ const App = () => {
               case 'i':
                 event.preventDefault()
                 toggleMark(editor, "italic")
+
+              case 'u':
+                event.preventDefault()
+                toggleMark(editor, "underline")
               
               default: break
               
