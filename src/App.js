@@ -2,13 +2,9 @@ import React, { useCallback, useMemo, useState } from 'react'
 import { createEditor, Editor, Text, Transforms } from 'slate'
 import { Slate, Editable, withReact } from 'slate-react'
 import { CodeElement, DefaultElement } from './Elements'
+import { BoldLeaf } from './Leaf'
 import './App.css'
 
-const BoldLeaf = (props) => {
-  return (
-      <strong { ...props.attributes } >{ props.children }</strong>
-  )
-}
 
 const DefaultLeaf = (props) => {
   return (
