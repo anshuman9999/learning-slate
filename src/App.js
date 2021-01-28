@@ -2,15 +2,8 @@ import React, { useCallback, useMemo, useState } from 'react'
 import { createEditor, Editor, Text, Transforms } from 'slate'
 import { Slate, Editable, withReact } from 'slate-react'
 import { CodeElement, DefaultElement } from './Elements'
-import { BoldLeaf } from './Leaf'
+import { BoldLeaf, DefaultLeaf } from './Leaf'
 import './App.css'
-
-
-const DefaultLeaf = (props) => {
-  return (
-    <span { ...props.attributes } >{ props.children }</span>
-  )
-}
 
 const App = () => {
   const editor = useMemo(() => withReact(createEditor()), [])
