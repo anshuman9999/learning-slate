@@ -64,15 +64,16 @@ const App = () => {
 
               case 'b':
                 event.preventDefault()
-                const [boldMatch] = Editor.nodes(
-                  editor,
-                  { match: n => n.type === "bold" }
-                )
-                Transforms.setNodes(
-                  editor,
-                  { type: boldMatch ? 'paragraph' : 'bold' },
-                  { match: n => Text.isText(n), split: true }
-                )
+                toggleMark(editor, "bold")
+                // const [boldMatch] = Editor.nodes(
+                //   editor,
+                //   { match: n => n.type === "bold" }
+                // )
+                // Transforms.setNodes(
+                //   editor,
+                //   { type: boldMatch ? 'paragraph' : 'bold' },
+                //   { match: n => Text.isText(n), split: true }
+                // )
                 break
               
               default: break
@@ -82,6 +83,19 @@ const App = () => {
         />
       </Slate>
     </div>
+  )
+}
+
+const toggleMark = (editor, format) => {
+  const [match] = Editor.nodes(
+    editor,
+    { match: n => n.type === format }
+  )
+
+  Transforms.setNodes(
+    editor,
+    { type: match ? 'paragraph' : format },
+    { match: n => Text.isText(n), split: true, always: true }
   )
 }
 
