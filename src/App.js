@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, useState } from 'react'
 import { createEditor, Editor, Text, Transforms } from 'slate'
 import { Slate, Editable, withReact } from 'slate-react'
 import { CodeElement, DefaultElement } from './Elements'
-import { BoldLeaf, DefaultLeaf } from './Leaf'
+import { BoldLeaf, DefaultLeaf, ItalicLeaf } from './Leaf'
 import './App.css'
 
 const App = () => {
@@ -25,10 +25,14 @@ const App = () => {
   }, [])
 
   const renderLeaf = useCallback(props => {
-    if(props.leaf.type === "bold") {
-      return <BoldLeaf { ...props } />
-    } else {
-      return <DefaultLeaf { ...props } />
+    switch(props.leaf.type) {
+      case 'bold':
+        return <BoldLeaf { ...props } />
+
+      case 'italic':
+        return <ItalicLeaf { ...props } />
+
+      default: return <DefaultLeaf { ...props } />
     }
   }, [])
 
@@ -65,16 +69,11 @@ const App = () => {
               case 'b':
                 event.preventDefault()
                 toggleMark(editor, "bold")
-                // const [boldMatch] = Editor.nodes(
-                //   editor,
-                //   { match: n => n.type === "bold" }
-                // )
-                // Transforms.setNodes(
-                //   editor,
-                //   { type: boldMatch ? 'paragraph' : 'bold' },
-                //   { match: n => Text.isText(n), split: true }
-                // )
                 break
+              
+              case 'i':
+                event.preventDefault()
+                toggleMark(editor, "italic")
               
               default: break
               

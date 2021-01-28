@@ -6,6 +6,12 @@ export const BoldLeaf = (props) => {
     )
 }
 
+export const ItalicLeaf = (props) => {
+    return (
+        <em { ...props.attributes } >{ props.children }</em>
+    )
+}
+
 export const DefaultLeaf = (props) => {
     return (
         <span {...props.attributes} >{props.children}</span>
