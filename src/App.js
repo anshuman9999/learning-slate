@@ -1,9 +1,10 @@
 import React, { useCallback, useMemo, useState } from 'react'
 import { createEditor, Editor, Text, Transforms } from 'slate'
 import { Slate, Editable, withReact } from 'slate-react'
-import { BoldLeaf, DefaultLeaf, ItalicLeaf, UnderlineLeaf } from './Leaf'
+//import { BoldLeaf, DefaultLeaf, ItalicLeaf, UnderlineLeaf } from './Leaf'
 import Elements from './Elements'
 import './App.css'
+import Leaf from './Leaf'
 
 const App = () => {
   const editor = useMemo(() => withReact(createEditor()), [])
@@ -28,18 +29,36 @@ const App = () => {
   }, [])
 
   const renderLeaf = useCallback(props => {
-    switch (props.leaf.type) {
-      case 'bold':
-        return <BoldLeaf {...props} />
+    // switch (props.leaf.type) {
+    //   case 'bold':
+    //     return <BoldLeaf {...props} />
 
-      case 'italic':
-        return <ItalicLeaf {...props} />
+    //   case 'italic':
+    //     return <ItalicLeaf {...props} />
 
-      case 'underline':
-        return <UnderlineLeaf {...props} />
+    //   case 'underline':
+    //     return <UnderlineLeaf {...props} />
 
-      default: return <DefaultLeaf {...props} />
-    }
+    //   default: return <DefaultLeaf {...props} />
+    // }
+
+    // switch(props.leaf.type) {
+    //   case 'bold':
+    //     return <Leaf { ...props } />
+
+    //   case 'italic':
+    //     return <Leaf { ...props } />
+
+    //   case 'underline':
+    //     return <Leaf { ...props } />
+
+    //   default:
+    //     return <Leaf { ...props } />
+
+    // }
+
+    return <Leaf {...props} />
+
   }, [])
 
   return (
@@ -80,6 +99,35 @@ const App = () => {
               )
             }
           } >H2</button>
+
+
+          <button
+            onMouseDown={
+              (e) => {
+                e.preventDefault()
+                toggleMark(editor, "bold")
+              }
+            }
+          >B</button>
+
+          <button
+            onMouseDown={
+              (e) => {
+                e.preventDefault()
+                toggleMark(editor, "italic")
+              }
+            }
+          >I</button>
+
+          <button
+            onMouseDown={
+              (e) => {
+                e.preventDefault()
+                toggleMark(editor, "underline")
+              }
+            }
+          >U</button>
+
         </div>
 
         <Editable
@@ -92,21 +140,6 @@ const App = () => {
             }
 
             switch (event.key) {
-
-              case '`':
-                event.preventDefault()
-
-                // const [match] = Editor.nodes(
-                //   editor,
-                //   { match: n => n.type === "heading-one" }
-                // )
-
-                // Transforms.setNodes(
-                //   editor,
-                //   { type: match ? 'paragraph' : 'heading-one' },
-                //   { match: n => Editor.isBlock(editor, n) }
-                // )
-                break
 
               case 'b':
                 event.preventDefault()
@@ -131,17 +164,22 @@ const App = () => {
   )
 }
 
-const toggleMark = (editor, format) => {
-  const [match] = Editor.nodes(
-    editor,
-    { match: n => n.type === format }
-  )
+const isMarkActive = (editor, format) => {
+  const [match] = Editor.nodes(editor, {
+    match: n => n.format === true
+  })
 
+  return !!match
+}
+
+const toggleMark = (editor, format) => {
+  const isActive = isMarkActive(editor, format)
   Transforms.setNodes(
     editor,
-    { type: match ? 'paragraph' : format },
-    { match: n => Text.isText(n), split: true, always: true }
+    { [format]: isActive ? null : true },
+    { match: n => Text.isText(n), split: true }
   )
+
 }
 
 
