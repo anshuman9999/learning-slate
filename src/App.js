@@ -165,20 +165,30 @@ const App = () => {
 }
 
 const isMarkActive = (editor, format) => {
-  const [match] = Editor.nodes(editor, {
-    match: n => n.format === true
-  })
+  // const [match] = Editor.nodes(editor, {
+  //   match: n => n.format === true
+  // })
 
-  return !!match
+  // return !!match
+  let marks = Editor.marks(editor)
+  let returnValue = marks ? marks[format] === true : false
+  return returnValue
 }
 
 const toggleMark = (editor, format) => {
   const isActive = isMarkActive(editor, format)
-  Transforms.setNodes(
-    editor,
-    { [format]: isActive ? null : true },
-    { match: n => Text.isText(n), split: true }
-  )
+
+  // Transforms.setNodes(
+  //   editor,
+  //   { [format]: isActive ? null : true },
+  //   { match: n => Text.isText(n), split: true }
+  // )
+
+  if(isActive) {
+    Editor.removeMark(editor, format) 
+  } else {
+    Editor.addMark(editor, format, true)
+  }
 
 }
 
